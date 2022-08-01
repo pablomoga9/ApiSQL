@@ -1,9 +1,11 @@
+require('dotenv').config()
+console.log("este es el console log de" + process.env.dbPass);
 const { Pool } = require('pg');
 const pool = new Pool({
     host: 'localhost',
-    user: 'postgres',
-    database: 'postgres',
-    password: 'prueba1234'
+    user: process.env.dbUser,
+    database: process.env.dbDatabase,
+    password: process.env.dbPass
   })
 
 // GET
