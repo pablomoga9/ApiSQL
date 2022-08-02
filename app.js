@@ -29,6 +29,7 @@ app.use(express.json());
 app.use("/products",productsRoutes);
 app.use("/api/products", productsApiRoutes);
 app.use("/api/entries", entriesApiRoutes);
+
 // HOME
 // http://127.0.0.1:3000
 // http://localhost:3000
