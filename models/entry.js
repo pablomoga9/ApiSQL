@@ -8,6 +8,11 @@ const pool = new Pool({
     password: process.env.dbPass
   })
 
+
+
+
+
+  //ENTRIES
 // GET
 const getEntriesByEmail = async (email) => {
     let client,result;
@@ -130,16 +135,7 @@ const updateEntryData = async (entry)=>{
 
 
 
-const entries = {
-    getEntriesByEmail,
-    getAllEntries,
-    createEntry,
-    updateEntryData,
-    deleteEntry
-    //updateEntry
-}
 
-module.exports = entries;
 
 
 // Pruebas
@@ -162,3 +158,80 @@ let newEntry = {
 
 // createEntry(newEntry)
 // .then(data=>console.log(data))
+
+
+
+
+
+//AUTHORS
+
+const getAuthorsByEmail = async (email) => {
+    let client,result;
+    try{
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(`
+                SELECT *
+                FROM authors AS a
+                WHERE email=$1`,[email])
+        result = data.rows
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        client.release();    
+    }
+    return result
+}
+
+const getAllAuthors = async ()=>{
+    let client,result;
+    try{
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(`
+                SELECT id_author,name,surname,email,image
+                FROM authors
+                 `)
+        result = data.rows
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        client.release();    
+    }
+    return result
+
+}
+
+
+const createAuthor = async (author) => {
+    const {id_author,name,surname,email,image} = author;
+    let client,result;
+    try{
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(`INSERT INTO authors(id_author,name,surname,email,image) 
+                                    VALUES ($1,$2,$3,$4,$5)`,[id_author,name,surname,email,image])
+                                    
+        result = data.rowCount
+    }catch(err){
+        console.log(err);
+        throw err;
+    }finally{
+        client.release();    
+    }
+    return result
+}
+
+
+
+const entries = {
+    getEntriesByEmail,
+    getAllEntries,
+    createEntry,
+    updateEntryData,
+    deleteEntry,
+    getAuthorsByEmail,
+    getAllAuthors,
+    createAuthor
+}
+
+module.exports = entries;

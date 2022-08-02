@@ -9,6 +9,7 @@ const checkApiKey = require('./middlewares/auth_API_KEY')
 const productsRoutes = require('./routes/productsRoutes');
 const productsApiRoutes = require('./routes/productsApiRoutes');
 const entriesApiRoutes = require('./routes/entriesApiRoutes')
+const authorsApiRoutes = require('./routes/authorsApiRoutes')
 // Tu propio módulo
 //const calc = require('./utils/calculator.js');
 const calc = require('./utils/calculator');
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/products",productsRoutes);
 app.use("/api/products", productsApiRoutes);
 app.use("/api/entries", entriesApiRoutes);
+app.use("/api/authors",authorsApiRoutes);
 
 // HOME
 // http://127.0.0.1:3000
