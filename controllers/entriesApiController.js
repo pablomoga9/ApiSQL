@@ -56,9 +56,32 @@ const deleteEntry = async(req,res)=>{
     }
 }
 
+const createEntriesTable = async(req,res)=>{
+  try{
+    const response = await entry.createEntriesTable();
+    res.status(200).json({'message':"Se ha creado la tabla de 'entries'" })
+  }
+  catch(error){
+    res.status(400).json({"error": "No se ha podido crear la tabla"})
+  }
+}
+const deleteEntriesTable = async(req,res)=>{
+  try{
+    const response = await entry.deleteEntriesTable()
+    res.status(200).json({'message':"Se ha borrado la tabla de 'entries'"})
+    
+ }
+  catch(error){
+    res.status(400).json({"error": "No se ha podido eliminar la tabla"});
+}
+}
+
+
 module.exports = {
     getEntries,
     createEntry,
     updateEntry,
-    deleteEntry
+    deleteEntry,
+    createEntriesTable,
+    deleteEntriesTable
 }

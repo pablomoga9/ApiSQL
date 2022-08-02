@@ -20,7 +20,9 @@ const db_queries_entries = {
     updateEntryData: `
     UPDATE entries
     SET content = $2, category = $3
-    WHERE title = $1`
+    WHERE title = $1`,
+    createEntriesTable:`CREATE TABLE entries(id_entry,title,content,date,id_author,category)`,
+    deleteEntriesTable:`DROP TABLE entries`
 }
 
 module.exports = db_queries_entries;

@@ -3,19 +3,18 @@ const db_queries_authors = {
     SELECT *
     FROM authors
     WHERE email=$1`,
-    getAllAuthors: `
-    SELECT *
-    FROM authors
-     `,
-     createAuthor: `INSERT INTO authors(id_author,name,surname,email,image) 
-     VALUES ($1,$2,$3,$4,$5)`,
-     updateAuthorData: `
-     UPDATE authors
-     SET id_author = $1, name = $2, surname = $3, image = $5
-     WHERE email = $4`,
-     deleteAuthorData: `
-     DELETE FROM authors
-     WHERE email = $4`,
+    getAllAuthors: `SELECT *FROM authors`,
+    createAuthor: `INSERT INTO authors(id_author,name,surname,email,image) 
+    VALUES ($1,$2,$3,$4,$5)`,
+    updateAuthorData: `
+    UPDATE authors
+    SET id_author = $1, name = $2, surname = $3, image = $5
+    WHERE email = $4`,
+    deleteAuthorData: `
+    DELETE FROM authors
+    WHERE email = $4`,
+    createAuthorTable:`CREATE TABLE authors(id_author,name,surname,email,image)`,
+    deleteAuthorsTable:`DROP TABLE authors`
 }
 
 module.exports = db_queries_authors;

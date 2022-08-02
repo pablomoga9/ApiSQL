@@ -1,18 +1,19 @@
-const entry = require('../models/entry');
+const author = require('../models/author');
 
 
 
 //GET AUTHORS MY EMAIL
 const getAuthors = async(req,res)=>{
-    try{
-      let authors;
+  let authorsData;  
+  try{
+     
       if(req.query.email){
-          authors = await entry.getAuthorsByEmail(req.query.email)
+          authorsData = await author.getAuthorsByEmail(req.query.email)
       }
       else{
-         authors = await entry.getAllAuthors();
+         authorsData = await author.getAllAuthors();
       }
-      res.status(200).json(authors);
+      res.status(200).json(authorsData);
     }
     catch(error){
       res.status(404).json("not found");
@@ -25,8 +26,8 @@ const getAuthors = async(req,res)=>{
   const createAuthor = async(req,res)=>{
     try{
         const newAuthor = req.body;
-        const response = await entry.createAuthor(newAuthor)
-        res.status(200).json({"usuario creado": req.body.email})
+        const response = await author.createAuthor(newAuthor)
+        res.status(200).json({"usuario creado": newAuthor.email})
     }
     catch(error){
 
@@ -39,7 +40,7 @@ const getAuthors = async(req,res)=>{
 const updateAuthor = async(req,res)=>{
     try{
         if(req.body.email){
-            const response = await entry.updateAuthorData(req.body)
+            const response = await author.updateAuthorData(req.body)
             res.status(200).json({'message':`Usuario actualizado: ${req.body.email}`})
         }
     }
@@ -54,7 +55,7 @@ const updateAuthor = async(req,res)=>{
 const deleteAuthor = async(req,res)=>{
     try{
         if(req.body.email){
-            const response = await entry.deleteAuthorData(req.body)
+            const response = await author.deleteAuthorData(req.body)
             res.status(200).json({'message':`Se ha borrado: ${req.body.email}`})
         }
     }
@@ -64,9 +65,32 @@ const deleteAuthor = async(req,res)=>{
 }
 
 
+const createAuthorsTable = async(req,res)=>{
+  try{
+    const response = await author.createAuthorsTable();
+    res.status(200).json({'message':"Se ha creado la tabla de 'authors'" })
+  }
+  catch(error){
+    res.status(400).json({"error": "No se ha podido crear la tabla"})
+  }
+}
+const deleteAuthorsTable = async(req,res)=>{
+  try{
+    const response = await author.deleteAuthorsTable()
+    res.status(200).json({'message':"Se ha borrado la tabla de 'authors'"})
+    
+ }
+  catch(error){
+    res.status(400).json({"error": "No se ha podido eliminar la tabla"});
+}
+}
+
+
   module.exports = {
     getAuthors,
     createAuthor,
     updateAuthor,
-    deleteAuthor
+    deleteAuthor,
+    createAuthorsTable,
+    deleteAuthorsTable
   }

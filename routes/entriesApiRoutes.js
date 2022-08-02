@@ -8,6 +8,8 @@ entriesApiRouter.get('/',entriesApiController.getEntries)
 entriesApiRouter.post('/', entriesApiController.createEntry)
 entriesApiRouter.put('/', entriesApiController.updateEntry)
 entriesApiRouter.delete('/',entriesApiController.deleteEntry)
+entriesApiRouter.post('/',entriesApiController.createEntriesTable)
+entriesApiRouter.delete('/',entriesApiController.deleteEntriesTable)
 
 module.exports = entriesApiRouter;
 //GET http//:localhost:3000/entries --> ALL
