@@ -1,5 +1,8 @@
 const entry = require('../models/entry');
 
+
+
+//GET AUTHORS MY EMAIL
 const getAuthors = async(req,res)=>{
     try{
       let authors;
@@ -16,9 +19,12 @@ const getAuthors = async(req,res)=>{
     }
   }
 
+
+
+  //CREATE POST AUTHOR
   const createAuthor = async(req,res)=>{
     try{
-        newAuthor = req.body;
+        const newAuthor = req.body;
         const response = await entry.createAuthor(newAuthor)
         res.status(200).json({"usuario creado": req.body.email})
     }
@@ -28,8 +34,39 @@ const getAuthors = async(req,res)=>{
   }
   
 
+//UPDATE PUT AUTHOR
+
+const updateAuthor = async(req,res)=>{
+    try{
+        if(req.body.email){
+            const response = await entry.updateAuthorData(req.body)
+            res.status(200).json({'message':`Usuario actualizado: ${req.body.email}`})
+        }
+    }
+    catch(error){
+        res.status(400).json({"fewpofkw": "peowkf"});
+    }
+}
+
+
+//DELETE AUTHOR
+
+const deleteAuthor = async(req,res)=>{
+    try{
+        if(req.body.email){
+            const response = await entry.deleteAuthorData(req.body)
+            res.status(200).json({'message':`Se ha borrado: ${req.body.email}`})
+        }
+    }
+    catch(error){
+        res.status(400).json({"fewpofkw": "peowkf"});
+    }
+}
+
 
   module.exports = {
     getAuthors,
-    createAuthor
+    createAuthor,
+    updateAuthor,
+    deleteAuthor
   }

@@ -171,7 +171,7 @@ const getAuthorsByEmail = async (email) => {
         client = await pool.connect(); // Espera a abrir conexion
         const data = await client.query(`
                 SELECT *
-                FROM authors AS a
+                FROM authors
                 WHERE email=$1`,[email])
         result = data.rows
     }catch(err){
@@ -188,7 +188,7 @@ const getAllAuthors = async ()=>{
     try{
         client = await pool.connect(); // Espera a abrir conexion
         const data = await client.query(`
-                SELECT id_author,name,surname,email,image
+                SELECT *
                 FROM authors
                  `)
         result = data.rows
@@ -222,6 +222,52 @@ const createAuthor = async (author) => {
 }
 
 
+const updateAuthorData = async (author)=>{
+    
+    const {id_author,name,surname,email,image} = author;
+    console.log("este es el author" +email)
+    let client,result;
+    client = await pool.connect();
+    try{
+      
+        const data = await client.query(`
+        UPDATE authors
+        SET id_author = $1, name = $2, surname = $3, image = $5
+        WHERE email = $4`,[id_author,name,surname,email,image])
+        result = data.rowCount
+        console.log(result)
+    }catch(err){
+        console.log(err)
+        throw err;
+    }finally{
+        client.release();    
+    }
+    return result
+}
+
+
+
+const deleteAuthorData = async(author)=>{
+    const {id_author,name,surname,email,image} = author;
+    let client,result;
+    try{
+        client = await pool.connect();
+        const data = await client.query(`
+        DELETE FROM authors
+        WHERE email = $4`,[id_author,name,surname,email,image])
+        result = data.rowCount
+    }catch(err){
+        console.log(err)
+        throw err;
+    }finally{
+        client.release();    
+    }
+    return result
+}
+
+
+
+
 
 const entries = {
     getEntriesByEmail,
@@ -231,7 +277,9 @@ const entries = {
     deleteEntry,
     getAuthorsByEmail,
     getAllAuthors,
-    createAuthor
+    createAuthor,
+    updateAuthorData,
+    deleteAuthorData
 }
 
 module.exports = entries;
