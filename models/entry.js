@@ -1,4 +1,6 @@
 require('dotenv').config()
+const entryQueries = require('../queries/entry.queries');
+const authorQueries = require('../queries/author.queries');
 console.log("este es el console log de" + process.env.dbPass);
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -18,13 +20,7 @@ const getEntriesByEmail = async (email) => {
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`
-                SELECT e.title,e.content,e.date,e.category,a.name,a.surname,a.image
-                FROM entries AS e
-                INNER JOIN authors AS a
-                ON e.id_author=a.id_author
-                WHERE a.email=$1
-                ORDER BY e.title;`,[email])
+        const data = await client.query(entryQueries.getEntriesByEmail,[email])
         result = data.rows
     }catch(err){
         console.log(err);
@@ -40,13 +36,7 @@ const getAllEntries = async () => {
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`
-                SELECT e.title,e.content,e.date,e.category,a.name,a.surname,a.image
-                FROM entries AS e
-                INNER JOIN authors AS a
-                ON e.id_author=a.id_author
-                
-                ORDER BY e.title; `)
+        const data = await client.query(entryQueries.getAllEntries)
         result = data.rows
     }catch(err){
         console.log(err);
@@ -66,10 +56,7 @@ const createEntry = async (entry) => {
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`INSERT INTO entries(title,content,id_author,category) 
-                                    VALUES ($1,$2,
-                                    (SELECT id_author FROM authors WHERE email=$3),$4)`
-                                    ,[title,content,email,category])
+        const data = await client.query(entryQueries.createEntry,[title,content,email,category])
         result = data.rowCount
     }catch(err){
         console.log(err);
@@ -86,9 +73,7 @@ const deleteEntry = async(entry)=>{
     let client,result;
     try{
         client = await pool.connect();
-        const data = await client.query(`
-        DELETE FROM entries
-        WHERE title = $1`,[title])
+        const data = await client.query(entryQueries.deleteEntry,[title])
         result = data.rowCount
     }catch(err){
         console.log(err)
@@ -112,10 +97,7 @@ const updateEntryData = async (entry)=>{
     client = await pool.connect();
     try{
        console.log(title,content,category)
-        const data = await client.query(`
-        UPDATE entries
-        SET content = $2, category = $3
-        WHERE title = $1`,[title,content,category])
+        const data = await client.query(entryQueries.updateEntryData,[title,content,category])
         result = data.rowCount
         console.log(result)
     }catch(err){
@@ -169,10 +151,7 @@ const getAuthorsByEmail = async (email) => {
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`
-                SELECT *
-                FROM authors
-                WHERE email=$1`,[email])
+        const data = await client.query(authorQueries.getAuthorsByEmail,[email])
         result = data.rows
     }catch(err){
         console.log(err);
@@ -187,10 +166,7 @@ const getAllAuthors = async ()=>{
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`
-                SELECT *
-                FROM authors
-                 `)
+        const data = await client.query(authorQueries.getAllAuthors)
         result = data.rows
     }catch(err){
         console.log(err);
@@ -208,8 +184,7 @@ const createAuthor = async (author) => {
     let client,result;
     try{
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(`INSERT INTO authors(id_author,name,surname,email,image) 
-                                    VALUES ($1,$2,$3,$4,$5)`,[id_author,name,surname,email,image])
+        const data = await client.query(authorQueries.createAuthor,[id_author,name,surname,email,image])
                                     
         result = data.rowCount
     }catch(err){
@@ -230,10 +205,7 @@ const updateAuthorData = async (author)=>{
     client = await pool.connect();
     try{
       
-        const data = await client.query(`
-        UPDATE authors
-        SET id_author = $1, name = $2, surname = $3, image = $5
-        WHERE email = $4`,[id_author,name,surname,email,image])
+        const data = await client.query(authorQueries.updateAuthorData,[id_author,name,surname,email,image])
         result = data.rowCount
         console.log(result)
     }catch(err){
@@ -252,9 +224,7 @@ const deleteAuthorData = async(author)=>{
     let client,result;
     try{
         client = await pool.connect();
-        const data = await client.query(`
-        DELETE FROM authors
-        WHERE email = $4`,[id_author,name,surname,email,image])
+        const data = await client.query(authorQueries.deleteAuthorData,[id_author,name,surname,email,image])
         result = data.rowCount
     }catch(err){
         console.log(err)
