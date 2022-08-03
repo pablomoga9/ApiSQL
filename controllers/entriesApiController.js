@@ -1,7 +1,7 @@
 const entry = require('../models/entry');
 
-//getEntries()
-//createEntry
+
+//GET SINGLE ENTRY BY EMAIL O ALL ENTRIES
 
 const getEntries = async(req,res)=>{
   try{
@@ -19,6 +19,9 @@ const getEntries = async(req,res)=>{
   }
 }
 
+
+//CREATE ENTRY
+
 const createEntry = async(req,res)=>{
   try{
     const newEntry = req.body;
@@ -30,6 +33,8 @@ const createEntry = async(req,res)=>{
     res.status(400).json({error_detail:error.detail,error_code:error.code});
   }
 }
+
+//UPDATE ENTRY
 
 const updateEntry = async(req,res)=>{
     try{
@@ -46,6 +51,8 @@ const updateEntry = async(req,res)=>{
 }
 
 
+//DELETE ENTRY
+
 const deleteEntry = async(req,res)=>{
     try{
         const response = await entry.deleteEntry(req.body)
@@ -56,6 +63,9 @@ const deleteEntry = async(req,res)=>{
     }
 }
 
+
+//CREATE ENTRIES TABLE
+
 const createEntriesTable = async(req,res)=>{
   try{
     const response = await entry.createEntriesTable();
@@ -65,6 +75,10 @@ const createEntriesTable = async(req,res)=>{
     res.status(400).json({"error": "No se ha podido crear la tabla"})
   }
 }
+
+//DELETE ENTRIES TABLE
+
+
 const deleteEntriesTable = async(req,res)=>{
   try{
     const response = await entry.deleteEntriesTable()
@@ -76,6 +90,8 @@ const deleteEntriesTable = async(req,res)=>{
 }
 }
 
+
+//Exports
 
 module.exports = {
     getEntries,

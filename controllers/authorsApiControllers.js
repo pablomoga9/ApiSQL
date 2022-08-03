@@ -65,6 +65,8 @@ const deleteAuthor = async(req,res)=>{
 }
 
 
+//CREATE AUTHORS TABLE
+
 const createAuthorsTable = async(req,res)=>{
   try{
     const response = await author.createAuthorsTable();
@@ -74,6 +76,10 @@ const createAuthorsTable = async(req,res)=>{
     res.status(400).json({"error": "No se ha podido crear la tabla"})
   }
 }
+
+
+//DELETE AUTHORS TABLE
+
 const deleteAuthorsTable = async(req,res)=>{
   try{
     const response = await author.deleteAuthorsTable()

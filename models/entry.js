@@ -4,11 +4,8 @@ const { Pool } = require('pg');
 const pool = require('../utils/db_pgsql')
 
 
+//GET ENTRY BY EMAIL
 
-
-
-  //ENTRIES
-// GET
 const getEntriesByEmail = async (email) => {
     let client,result;
     try{
@@ -24,7 +21,8 @@ const getEntriesByEmail = async (email) => {
     return result
 }
 
-// GET
+// GET ALL ENTRIES
+
 const getAllEntries = async () => {
     let client,result;
     try{
@@ -39,11 +37,10 @@ const getAllEntries = async () => {
     }
     return result
 }
-// ALTER TABLE entries
-// ADD UNIQUE(title);
 
 
-// CREATE
+// CREATE AN ENTRY
+
 const createEntry = async (entry) => {
     const {title,content,email,category} = entry;
     let client,result;
@@ -60,7 +57,7 @@ const createEntry = async (entry) => {
     return result
 }
 
-// DELETE 
+// DELETE AN ENTRY BY TITLE
 const deleteEntry = async(entry)=>{
     const {title,content,email,category} = entry;
     let client,result;
@@ -78,10 +75,8 @@ const deleteEntry = async(entry)=>{
 }
 
 
+//UPDATE ENTRY BY TITLE
 
-
-
-//UPDATE
 const updateEntryData = async (entry)=>{
     
     const {title,content,category} = entry;
@@ -142,28 +137,7 @@ const deleteEntriesTable = async(entry)=>{
 }
 
 
-
-
-// Pruebas
-
-    getEntriesByEmail("birja@thebridgeschool.es")
-    .then(data=>console.log(data))
-
-
-
-// getAllEntries()
-// .then(data=>console.log(data))
-
-
-
-let newEntry = {
-    title:"noticia desde Node",
-    content:"va a triunfar esto22",
-    email:"alejandru@thebridgeschool.es",
-    category:"sucesos"}
-
-// createEntry(newEntry)
-// .then(data=>console.log(data))
+//Exports
 
 const entries = {
     getEntriesByEmail,

@@ -5,11 +5,11 @@ const authorsApiController = require("../controllers/authorsApiControllers");
 const authorsApiRouter = express.Router();
 
 
-authorsApiRouter.get('/',authorsApiController.getAuthors)
-authorsApiRouter.post('/', authorsApiController.createAuthor)
-authorsApiRouter.put('/', authorsApiController.updateAuthor)
-authorsApiRouter.delete('/',authorsApiController.deleteAuthor)
-authorsApiRouter.post('/', authorsApiController.createAuthorsTable)
-authorsApiRouter.delete('/',authorsApiController.deleteAuthorsTable)
+authorsApiRouter.get('/authors',authorsApiController.getAuthors)
+authorsApiRouter.post('/authors', authorsApiController.createAuthor)
+authorsApiRouter.put('/authors', authorsApiController.updateAuthor)
+authorsApiRouter.delete('/authors',authorsApiController.deleteAuthor)
+authorsApiRouter.post('/authors', authorsApiController.createAuthorsTable)
+authorsApiRouter.delete('/authors',authorsApiController.deleteAuthorsTable)
 
 module.exports = authorsApiRouter;

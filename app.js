@@ -5,13 +5,15 @@ const owl = require('cowsay2/cows/owl');
 const whale = require('cowsay2/cows/whale');
 const manage404 = require('./middlewares/error404');
 const checkApiKey = require('./middlewares/auth_API_KEY')
+
+
 // Rutas de productos
 const productsRoutes = require('./routes/productsRoutes');
 const productsApiRoutes = require('./routes/productsApiRoutes');
 const entriesApiRoutes = require('./routes/entriesApiRoutes')
 const authorsApiRoutes = require('./routes/authorsApiRoutes')
-// Tu propio módulo
-//const calc = require('./utils/calculator.js');
+
+
 const calc = require('./utils/calculator');
 
 const app = express()
@@ -24,17 +26,24 @@ app.set('views','./views');
 //Permite leer el body recibido en una petición
 app.use(express.json());
 
-// app.use(checkApiKey);
+
 // Router de productos
-// app.use("/products",checkApiKey,productsRoutes);
+
 app.use("/products",productsRoutes);
 app.use("/api/products", productsApiRoutes);
-app.use("/api/entries", entriesApiRoutes);
-app.use("/api/authors",authorsApiRoutes);
+app.use("/api/", entriesApiRoutes);
+app.use("/api/",authorsApiRoutes);
 
-// HOME
-// http://127.0.0.1:3000
-// http://localhost:3000
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------
 app.get('/', (req, res) => {
     console.log(emoji);
     console.log(cowsay.say('Hola que tal?', { cow: owl }));
@@ -44,12 +53,9 @@ app.get('/', (req, res) => {
     res.render("my_view",{section:"Home",msj});
 })
 
-// http://localhost:3000/pokemon/charmander
-// http://localhost:3000/pokemon/mew
-// http://localhost:3000/pokemon/pikachu
-// http://localhost:3000/pokemon/snorlax
 
-// http://localhost:3000/pokemon
+
+
 app.get('/pokemon/:name?', (req, res) => {
     console.log(req.params);
     let msj = "";
